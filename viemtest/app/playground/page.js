@@ -93,7 +93,7 @@ const Playground = () => {
             functionName: 'checkBalance'
         });
         setLoading(false);
-        alert(`Balance: ${res} wei`);
+        alert(`Balance: ${Number(res) / 10 ** 18} ETH`);
     }
 
 
