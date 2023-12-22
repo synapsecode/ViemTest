@@ -22,7 +22,7 @@ const Playground = () => {
         storageContract = new ViemContract({
             name: 'SimpleStorage',
             abi: simpleStorageABI.abi,
-            address: '0xed116583E63C8Cd7B0b73DDaaA29C58A0D6B6902',
+            address: '0xe373adf3eda57082ad8b94d009514bccfee6a825',
         });
     }
 
@@ -74,6 +74,14 @@ const Playground = () => {
         })
     }
 
+    const deploy = async () => {
+        if (storageContract === null) return console.error('NULLCONTRACT');
+        setLoading(true);
+        const res = await ViemUtils.deployContract({ abi: simpleStorageABI.abi });
+        setLoading(false);
+        console.log(res);
+    }
+
 
     const pay = async () => {
         if (storageContract === null) return console.error('NULLCONTRACT');
@@ -87,6 +95,7 @@ const Playground = () => {
     }
 
     const checkBalance = async () => {
+
         if (storageContract === null) return console.error('NULLCONTRACT');
         setLoading(true);
         const res = await storageContract.read({
@@ -95,10 +104,6 @@ const Playground = () => {
         setLoading(false);
         alert(`Balance: ${Number(res) / 10 ** 18} ETH`);
     }
-
-
-
-
 
     useEffect(() => {
         console.log('Loaded');
@@ -114,6 +119,8 @@ const Playground = () => {
         <div className='text-sky-400 p-5'>
             <p className='text-4xl'>SimpleStorage</p>
             <br /><br />
+            <button onClick={deploy} className="ml-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"> Test Deploy </button><br />
+
             <button onClick={testSendTX} className="ml-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"> Send Transaction Test </button><br />
 
             <button onClick={load} className="ml-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"> Load </button><br />

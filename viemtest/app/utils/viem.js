@@ -3,6 +3,7 @@
 import { createWalletClient, custom, createPublicClient, http } from 'viem'
 import { goerli } from 'viem/chains'
 import { parseEther, getAddress, decodeEventLog, parseAbi } from 'viem';
+import bytecode from '../playground/bytecode';
 
 let eventUnsubscriberList = [];
 
@@ -68,6 +69,26 @@ class ViemUtils {
 
     static handleWalletClientUninitializedCase() {
         console.error('WalletClient uninitialized!!!!');
+    }
+
+    static deployContract = async ({
+        abi,
+    }) => {
+        if (!this.initialized) return this.handleWalletClientUninitializedCase();
+        const account = await this.getConnectedAddress();
+        console.log(abi);
+        console.log(account);
+        console.log(bytecode);
+        const hash = await this.walletClient.deployContract({
+            abi: abi,
+            account: account,
+            bytecode: bytecode,
+            args: [10],
+            gas: 500000,
+        })
+        console.log(`TXHash: ${hash}`);
+        const txdata = await this.publicClient.waitForTransactionReceipt({ hash: hash });
+        console.log(txdata);
     }
 }
 

@@ -8,6 +8,10 @@ contract SimpleStorage {
     event ValueUpdated(uint256 newValue);
     event Deposit(address indexed depositor, uint256 amount);
 
+    constructor(uint initial) {
+        storedValue = initial;
+    }
+
     function get() public view returns (uint256) {
         return storedValue;
     }

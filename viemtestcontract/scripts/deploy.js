@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-    const lock = await hre.ethers.deployContract("SimpleStorage");
+    const lock = await hre.ethers.deployContract("SimpleStorage", [10]);
     await lock.waitForDeployment();
 
     console.log(
